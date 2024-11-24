@@ -3,7 +3,9 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include "pedido.hpp"
 #include "registro.hpp"
+
 
 class Registro {
 private :
@@ -30,7 +32,6 @@ void agregar_pedido(Pedido *pedido, bool servir, int id);
 Pedido *get_pedido(int id, bool tipo); // Retorna el pedido según id y tipo (servir true // llevar false )
 Pedido *eliminar_pedido(int id, bool tipo); // Elimina el pedido según id y tipo
 
-void cuenta(Pedido *pedido);
 int calcular_ganancias(Pedido *pedido);
 int hash(int id, bool servir);
 int hash2(int index, int i);
@@ -208,12 +209,6 @@ Pedido *Registro::eliminar_pedido(int id, bool tipo){
 
     }
     return nullptr;
-}
-
-void Registro::cuenta(Pedido *pedido){
-    int total;
-    total=pedido->get_total();
-    std::cout<<"total: "<<total<<std::endl;
 }
 
 int Registro::calcular_ganancias(Pedido *pedido){

@@ -45,13 +45,15 @@ int main(){
     Registro registro(cant_mesas);
     leer_archivo("platos.txt", platos, cant_platos);
     int contar_llevar = 1;
+    Pedido pedido;
 
     while(comando != "cerrar"){
-        Pedido pedido;
+    
         
         Plato plato_temp;
         std::cin>>comando;
         if(comando == "registrar"){
+            //pedido.reiniciar();
             std::string tipo;
             int mesa, numero_pedido;
             bool servir;
@@ -60,7 +62,7 @@ int main(){
             if(tipo == "mesa"){
                 std::cin>>mesa;
                 servir = true;     
-                numero_pedido = mesa;              
+                numero_pedido = mesa;
             }
             else{
                 numero_pedido = contar_llevar;
@@ -87,19 +89,22 @@ int main(){
                     break;
                 }
             }
+          
             if(tipo == "mesa"){
                 registro.agregar_pedido(&pedido, true, mesa);
+                                  
             }
             else{
                 registro.agregar_pedido(&pedido, false, contar_llevar);
+                
             }
+
         }
 
-        
         else if(comando == "info"){
             
             std::string tipo;
-            //int mesa;
+            int mesa;
             int n_pedido;
             bool servir;
             std::cin.ignore();

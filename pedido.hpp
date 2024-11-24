@@ -40,29 +40,44 @@ bool get_servir();
 void set_estado(int estado2);
 int get_cant_platos();
 void imprimir_platos();
+void reiniciar();
 
 
 };
 
+
 Pedido::Pedido(){
     platos = new Plato[25];
+    precio_pedidos = 0;
 }
 
 Pedido::~Pedido (){
     delete[] platos;
 }
 
-void Pedido::agregar_plato(Plato *plato){
-    
-    if (cant_platos<25){
-        platos[cant_platos] = *plato;
+void Pedido::agregar_plato(Plato *plato) {
+    if (cant_platos < 25) {
+        platos[cant_platos].nombre = plato->nombre;  // Copia explícita del nombre
+        platos[cant_platos].precio = plato->precio;  // Copia explícita del precio
+        //std::cout << "Plato agregado: " << platos[cant_platos].nombre << std::endl;
         cant_platos++;
+    } else {
+        std::cout << "Cantidad máxima de platos alcanzada" << std::endl;
     }
-    else{
-    std::cout<<"Cantidad máxima de platos alcanzada"<<std::endl;
-    }
-
 }
+
+// void Pedido::agregar_plato(Plato *plato){
+    
+//     if (cant_platos<25){
+//         platos[cant_platos] = *plato;
+//         std::cout<<"plato agregado: "<<platos[cant_platos].nombre<<std::endl;
+//         cant_platos++;
+//     }
+//     else{
+//     std::cout<<"Cantidad máxima de platos alcanzada"<<std::endl;
+//     }
+
+// }
 
 int Pedido::precio_total() {
     int precio_pedidos = 0;
@@ -103,15 +118,28 @@ void Pedido::set_estado(int estado2){
 }
 
 void Pedido::imprimir_platos(){
-    
+    int precio_pedido = 0;
    for(int i = 0; i<cant_platos; i++){
-        std::cout<<"hola"<<std::endl;
         std::cout<<platos[i].nombre<<std::endl;
     }
-    std::cout<<"precio total: "<<precio_total()<<std::endl;
+    for(int i = 0; i<cant_platos; i++){
+        precio_pedido += platos[i].precio;
+    }
+    std::cout<<"precio total: "<<precio_pedido<<std::endl;
 }
+
+
 
 int Pedido::get_cant_platos(){
     return cant_platos;
+}
+
+
+void Pedido::reiniciar() {
+    cant_platos = 0;
+    precio_pedidos = 0;
+    servir = false;
+    estado = 0;
+    id = 0;
 }
 #endif
