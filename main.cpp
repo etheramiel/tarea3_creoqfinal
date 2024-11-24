@@ -48,6 +48,7 @@ int main(){
 
     while(comando != "cerrar"){
         Pedido pedido;
+        
         Plato plato_temp;
         std::cin>>comando;
         if(comando == "registrar"){
@@ -59,19 +60,17 @@ int main(){
             if(tipo == "mesa"){
                 std::cin>>mesa;
                 servir = true;     
-                registro.agregar_pedido(&pedido, true, mesa);
                 numero_pedido = mesa;              
             }
             else{
-                registro.agregar_pedido(&pedido, false, contar_llevar);
                 numero_pedido = contar_llevar;
                 contar_llevar++;
             }
-
-            std::cin>>comando;
+            std::string comando2;
+            std::cin>>comando2;
             std::string plato;
             
-            while(comando == "agregar"){
+            while(comando2 == "agregar"){
                 std::getline(std::cin, plato);
                 plato.erase(0, plato.find_first_not_of(" "));
 
@@ -81,34 +80,44 @@ int main(){
                     }
                 }
                 pedido.agregar_plato(&plato_temp);
-                std::cin>>comando;  
+                std::cin>>comando2;  
                 
-                if(comando == "pedir"){
+                if(comando2 == "pedir"){
                     std::cout<<tipo<<" "<<numero_pedido<<" Registrado"<<std::endl;
                     break;
                 }
             }
+            if(tipo == "mesa"){
+                registro.agregar_pedido(&pedido, true, mesa);
+            }
+            else{
+                registro.agregar_pedido(&pedido, false, contar_llevar);
+            }
         }
 
-         
-
+        
         else if(comando == "info"){
-            std::cout<<"info"<<std::endl;
+            
             std::string tipo;
-            int mesa;
+            //int mesa;
             int n_pedido;
             bool servir;
             std::cin.ignore();
             std::cin>>tipo;
+            
         
             if(tipo == "mesa"){
-                std::cin>>mesa;
-                
+                std::cin>>n_pedido;
+                servir = true;   
             }
             else{
                 std::cin>>n_pedido;
+                servir = false;
             }
-
+            
+            pedido = *registro.get_pedido(n_pedido, servir);
+            pedido.imprimir_platos();
+            
         }
 
         else if(comando == "pagar"){
@@ -119,14 +128,10 @@ int main(){
             std::cin>>id;
             if(tipo1 == "mesa"){
                 tipo = true;
-                
             }
             else{
-                tipo = false;
-                
+                tipo = false;       
             } 
         }
-
     }
-
 }
